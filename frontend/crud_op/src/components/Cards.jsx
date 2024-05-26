@@ -2,12 +2,17 @@ import React, { useContext, useEffect } from 'react'
 import './cards.css'
 import productContext from './context/Form_Context'
 
+
 function Users() {
     const {productData,getData}=useContext(productContext)
 
 
+
+
+    
+
     useEffect(()=>{
-      getData()
+      getProduct()
     },[])
 
 
@@ -46,10 +51,11 @@ function Users() {
             // cosnt{name,email,age}=product
            return(
             <div className="products-card">
+            <div className="products-img">{product.img}</div>
             <div className="products-name">{product.name}</div>
             <div className="products-price">{product.email}</div>
             <div className="products-detail">{product.age}</div>
-            <div className="edit">Edit</div>
+            <div className="edit"><Link to={`/updateForm/${product._id}`}></Link></div>
             <div className="delete" onClick={()=>deleteProduct(product._id)}>Delete</div>
             </div>
            )

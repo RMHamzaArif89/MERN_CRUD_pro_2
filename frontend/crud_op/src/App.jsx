@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Cards from './components/Cards'
 import Form from './components/Form';
 import Nav from './components/Nav'
+import UpdateForm from './components/updateForm';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route index element={<Cards />} />
         <Route path="cards" element={<Cards />} />
         <Route path="form" element={<Form />} />
+        <Route path="updateForm" element={<UpdateForm />} />
     
         </Routes>
     

@@ -12,7 +12,7 @@ export const ContextProvider=({children})=>{
 
     const getData=async()=>{
       try{
-        const response=await fetch('http://localhost:5000/api/productsData',{
+        const response=await fetch('http://localhost:5000/api/productsData/',{
           method:'GET',
       
       })

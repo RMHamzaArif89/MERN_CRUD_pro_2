@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function Form() {
@@ -56,9 +56,13 @@ navigate('/Cards')
   }
 }
 
+
+
+
+
   return (
    <>
-   <form onSubmit={(e)=>{handleSubmit(e)}} className='container' >
+   <form onSubmit={(e)=>{handleSubmit(e)}} className='container' encType="multipart/form-data" >
    <div className="mb-3">
     <label htmlFor="name" className="form-label">Name</label>
     <input value={values.name} name='name' onChange={(e)=>{handleChange(e)}}  type="text" className="form-control" id="name"/>
@@ -72,7 +76,7 @@ navigate('/Cards')
 
   <div className="mb-3">
     <label htmlFor="exampleInputEmail1" className="form-label">Image</label>
-    <input value={values.img} name='img' onChange={(e)=>{handleChange(e)}} type="file" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+    <input value={values.img} name='img' onChange={(e)=>{handleChange(e)}} accept='image/*' type="file" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
   
   </div>
 
