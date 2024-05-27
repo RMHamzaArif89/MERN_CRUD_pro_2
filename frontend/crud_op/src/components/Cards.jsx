@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import './cards.css'
 import productContext from './context/Form_Context'
-
-
+import {Link} from 'react-router-dom'
 function Users() {
     const {productData,getData}=useContext(productContext)
 
@@ -12,7 +11,7 @@ function Users() {
     
 
     useEffect(()=>{
-      getProduct()
+      getData()
     },[])
 
 
@@ -50,14 +49,16 @@ function Users() {
         productData.map((product)=>{
             // cosnt{name,email,age}=product
            return(
+          <>
             <div className="products-card">
-            <div className="products-img">{product.img}</div>
+            <img src={'http://localhost:5000/'+product.img} className='product-img'/>
             <div className="products-name">{product.name}</div>
             <div className="products-price">{product.email}</div>
-            <div className="products-detail">{product.age}</div>
-            <div className="edit"><Link to={`/updateForm/${product._id}`}></Link></div>
+            <div className="products-detail">{product.price}</div>
+            <div className="edit"><Link to={`/updateForm/${product._id}`}>Edit</Link></div>
             <div className="delete" onClick={()=>deleteProduct(product._id)}>Delete</div>
             </div>
+          </>
            )
         })
       }

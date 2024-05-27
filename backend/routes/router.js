@@ -20,16 +20,16 @@ router.use(express.static('upload'))
 //upload img logic
 // img upload
 const Storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      return cb(null, "./upload")
-    },
-    filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now()
-      return cb(null,`${uniqueSuffix}-${file.originalname}`)
-    }
-  })
-  
-  const upload = multer({ storage:Storage })
+  destination: function (req, file, cb) {
+    return cb(null, "./upload")
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now()
+    return cb(null,`${uniqueSuffix}-${file.originalname}`)
+  }
+})
+
+const upload = multer({ storage:Storage })
 
 
 
@@ -41,10 +41,12 @@ router.post('/createProduct',upload.single('img'),async(req,res)=>{
  
    
     try{
+      
+     console.log(req.file)
         const productData=new crud_products({
             name:req.body.name,
             price:req.body.price,
-            img:req.body.img,
+            img:req.file.filename,
             detail:req.body.detail
         })
         //or simply second method
@@ -91,7 +93,7 @@ router.get('/productsData',async(req,res)=>{
 router.get('/productsData/:id',async(req,res)=>{
  try{
   const _id=req.params.id
-  let Data=await crud_products.findOneById({_id})
+  let Data=await crud_products.findById({_id})
   if(Data){
    return  res.status(200).json({data:Data})
 
@@ -115,6 +117,31 @@ router.delete('/deleteProduct/:id',async(req,res)=>{
   const _id=req.params.id
   
   await crud_products.findByIdAndDelete({_id})
+  
+
+   return res.status(200).json({msg:'success'})
+ 
+ }
+ catch(e){
+  res.status(400).json({
+    msg:e
+  })
+ }
+})
+
+
+//update the data by id
+router.patch('/updateProduct/:id',async(req,res)=>{
+ try{
+  const _id=req.params.id
+  
+  await crud_products.findByIdAndUpdate(
+    {_id},{
+    name:req.body.name,
+    price:req.body.price,
+    img:req.body.img,
+    detail:req.body.detail
+  })
   
 
    return res.status(200).json({msg:'success'})

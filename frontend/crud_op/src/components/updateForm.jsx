@@ -6,7 +6,7 @@ import { useNavigate,useParams } from 'react-router-dom';
 function UpdateForm() {
 
     
-    const id=useParams(id)
+    const {id}=useParams()
 
     const [values,setValues]=useState({
       name:'',
@@ -31,12 +31,12 @@ function UpdateForm() {
     )
 
     }
-
+//update data
     const handleSubmit=async(e)=>{
       console.log('submit')
       e.preventDefault();
  try{
-  const response=await fetch(`http://localhost:5000/api/createProduct`,{
+  const response=await fetch(`http://localhost:5000/api/updateProduct/${id}`,{
     method:'PATCH',
     headers:{
   "Content-Type":'application/json'
@@ -62,18 +62,17 @@ navigate('/Cards')
 }
 
 //get singledata
-const getData=async(id)=>{
+const getOneData=async(id)=>{
     try{
       const response=await fetch(`http://localhost:5000/api/productsData/${id}`,{
         method:'GET',
+        
     
     })
     
      if(response.ok){
       const res= await response.json()
-      
-      
-      
+  console.log('ok')
   setValues(res.data)
     
      }
@@ -85,7 +84,7 @@ const getData=async(id)=>{
     }
   
 useEffect(()=>{
-getData(id)
+getOneData(id)
 },[])
 
 
@@ -107,7 +106,7 @@ getData(id)
 
   <div className="mb-3">
     <label htmlFor="exampleInputEmail1" className="form-label">Image</label>
-    <input value={values.img} name='img' onChange={(e)=>{handleChange(e)}} accept='image/*' type="file" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+    <input value={values.img} name='img' onChange={(e)=>{setValues(e.target.files[0])}} accept='image/*' type="file" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
   
   </div>
 
@@ -116,7 +115,7 @@ getData(id)
     <input value={values.detail} name='detail' onChange={(e)=>{handleChange(e)}} type="text" className="form-control" id="exampleInputPassword1"/>
   </div>
 
-  <button type="submit" className="btn btn-primary">Submit</button>
+  <button type="submit" className="btn btn-primary">Update Form</button>
 </form>
    </>
   )

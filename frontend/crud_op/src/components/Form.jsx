@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 function Form() {
     const [values,setValues]=useState({
@@ -28,32 +29,33 @@ function Form() {
     }
 
     const handleSubmit=async(e)=>{
-      console.log('submit')
+      // console.log(values.img)
       e.preventDefault();
- try{
-  const response=await fetch('http://localhost:5000/api/createProduct',{
-    method:'POST',
+      const formData=new FormData()
+      formData.append("img",values.img)
+      formData.append("name",values.name)
+      formData.append("price",values.price)
+      formData.append("detail",values.detail)
+
+ 
+axios.post(
+  "http://localhost:5000/api/createProduct",
+  formData,{
     headers:{
-  "Content-Type":'application/json'
-    },
-    body:JSON.stringify(values)
-})
-console.log(response)
- if(response.ok){
-  
+      "Content-Type":"multipart/form-data"
+    }
+  }
+).then(res=>console.log(res)
+).then(
+    
   setValues({
     name:'',
     price:'',
     img:'',
     detail:''
-})
+}),
 navigate('/Cards')
- }
-    }
-
-  catch(e){
-    console.log('send error',e)
-  }
+).catch(err=>console.log(err))
 }
 
 
@@ -76,7 +78,7 @@ navigate('/Cards')
 
   <div className="mb-3">
     <label htmlFor="exampleInputEmail1" className="form-label">Image</label>
-    <input value={values.img} name='img' onChange={(e)=>{handleChange(e)}} accept='image/*' type="file" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+    <input accept='image/*'  type="file"  name='img' onChange={(e)=>setValues(pre=>{return {...pre,[e.target.name]:e.target.files[0]}})}  className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
   
   </div>
 

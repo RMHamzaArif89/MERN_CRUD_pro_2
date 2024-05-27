@@ -19,7 +19,7 @@ function App() {
         <Route index element={<Cards />} />
         <Route path="cards" element={<Cards />} />
         <Route path="form" element={<Form />} />
-        <Route path="updateForm" element={<UpdateForm />} />
+        <Route path='/updateForm/:id' element={<UpdateForm />} />
     
         </Routes>
     

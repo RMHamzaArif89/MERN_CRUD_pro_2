@@ -37,3 +37,9 @@
     color: white;
     text-align: center;
 }
+.delete,.edit{
+    font-size: 1.3rem;
+    color:red;
+    cursor: pointer;
+    text-decoration: none;
+}
