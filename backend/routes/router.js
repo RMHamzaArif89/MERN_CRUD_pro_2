@@ -2,7 +2,9 @@ const express=require('express')
 const router=express.Router()
 const crud_products=require('../model/schema')
 const bodyParser=require('body-parser')
-
+const authenticateToken=require('../authenticateUser')
+const cookieParser=require('cookie-parser')
+const UserDetail=require('../model/UserDetails')
 const multer=require('multer')
 const path=require('path')
 
@@ -11,6 +13,7 @@ const path=require('path')
 //this is middleWare use to encode the form&body request value //example req.body from form
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(express.json())
+router.use(cookieParser())
 
 
 //for upload file

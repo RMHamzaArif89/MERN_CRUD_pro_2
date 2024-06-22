@@ -14,6 +14,10 @@ export const ContextProvider=({children})=>{
       try{
         const response=await fetch('http://localhost:5000/api/productsData',{
           method:'GET',
+          header:{
+            "Content-Type":'application/json',
+          },
+          credentials: 'include'  
       
       })
       
@@ -29,6 +33,7 @@ export const ContextProvider=({children})=>{
       
         catch(e){
           console.log('data not found',e)
+          console.log(response)
         }
       }
     

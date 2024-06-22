@@ -22,6 +22,15 @@ function Nav() {
       <li className="nav-item">
       <Link  className='nav-link' to="/updateForm">Update form</Link>
       </li>
+      <li className="nav-item">
+      <Link  className='nav-link' to="/register">SignUP</Link>
+      </li>
+      <li className="nav-item">
+      <Link  className='nav-link' to="/login">Login</Link>
+      </li>
+      <li className="nav-item">
+      <Link  className='nav-link' to="/logout">logout</Link>
+      </li>
 
        
      
