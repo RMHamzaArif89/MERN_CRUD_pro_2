@@ -27,38 +27,48 @@ function Form() {
     )
 
     }
+    axios.defaults.withCredentials = true;
 
     const handleSubmit=async(e)=>{
       // console.log(values.img)
       e.preventDefault();
-      const formData=new FormData()
-      formData.append("img",values.img)
-      formData.append("name",values.name)
-      formData.append("price",values.price)
-      formData.append("detail",values.detail)
+  try{
+    const formData=new FormData()
+    formData.append("img",values.img)
+    formData.append("name",values.name)
+    formData.append("price",values.price)
+    formData.append("detail",values.detail)
 
- 
+
 axios.post(
-  "http://localhost:5000/api/createProduct",
-  formData,{
-    headers:{
-      "Content-Type":"multipart/form-data"
-    }
-  }
+"http://localhost:5000/api/createProduct",
+formData,{
+  headers:{
+    "Content-Type":"multipart/form-data"
+  },
+  credentials: 'include'
+
+}
 ).then(res=>console.log(res)
 ).then(
-    
-  setValues({
-    name:'',
-    price:'',
-    img:'',
-    detail:''
-}),
-navigate('/Cards')
-).catch(err=>console.log(err))
-}
+  
+setValues({
+  name:'',
+  price:'',
+  img:'',
+  detail:''
+})
+).then(
+  
+    navigate('/Cards')
+
+)
 
 
+  }catch(e){
+    console.log('err',e)
+  }
+    }
 
 
 

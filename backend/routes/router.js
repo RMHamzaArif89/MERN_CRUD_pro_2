@@ -7,6 +7,7 @@ const cookieParser=require('cookie-parser')
 const UserDetail=require('../model/UserDetails')
 const multer=require('multer')
 const path=require('path')
+const bcrypt=require('bcryptjs')
 
 
 
@@ -40,9 +41,9 @@ const upload = multer({ storage:Storage })
 
 
 
-router.post('/createProduct',upload.single('img'),async(req,res)=>{
+router.post('/createProduct',authenticateToken,upload.single('img'),async(req,res)=>{
  
-   
+   console.log('create product')
     try{
       
      console.log(req.file)
@@ -74,14 +75,19 @@ router.post('/createProduct',upload.single('img'),async(req,res)=>{
 
 
 //Get the data
-router.get('/productsData',async(req,res)=>{
+router.get('/productsData', authenticateToken,async(req,res)=>{
+  
  try{
   let Data=await crud_products.find({})
   if(Data){
    return  res.status(200).json({data:Data})
 
+
   }
+  console.log('not found data')
     return res.status(400).json('data not found')
+    
+
   
  }
  catch(e){
@@ -93,7 +99,7 @@ router.get('/productsData',async(req,res)=>{
 
 
 //Get the single Data
-router.get('/productsData/:id',async(req,res)=>{
+router.get('/productsData/:id', authenticateToken,async(req,res)=>{
  try{
   const _id=req.params.id
   let Data=await crud_products.findById({_id})
@@ -115,8 +121,9 @@ router.get('/productsData/:id',async(req,res)=>{
 
 
 //Delete the data by id
-router.delete('/deleteProduct/:id',async(req,res)=>{
+router.delete('/deleteProduct/:id', authenticateToken,async(req,res)=>{
  try{
+  console.log('delete')
   const _id=req.params.id
   
   await crud_products.findByIdAndDelete({_id})
@@ -134,7 +141,7 @@ router.delete('/deleteProduct/:id',async(req,res)=>{
 
 
 //update the data by id
-router.patch('/updateProduct/:id',async(req,res)=>{
+router.patch('/updateProduct/:id',authenticateToken,async(req,res)=>{
  try{
   const _id=req.params.id
   
@@ -227,7 +234,7 @@ try{
   const options= {
     httpOnly:true,
     secure:true,
-    maxAge:300000,
+    maxAge:3000000,
     sameSite:'strict'
    }
    if(!passwordMatch){
@@ -257,6 +264,18 @@ catch(e){
   
 })
 
+router.get('/logout', authenticateToken, async(req,res)=>{
+  console.log('logout enter')
+  try{
+   res.status(200).clearCookie('accessToken')
+   .json('logout')
+   
+  }
+  catch(err){
+    res.status(400).json({msg:err})
+  }
+  
+})
 
 
 

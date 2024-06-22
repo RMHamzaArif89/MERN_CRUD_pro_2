@@ -9,11 +9,14 @@ try{
     const token=req.cookies.accessToken
 
 if(!token){
+    console.log('unautherized')
 return res.status(401).json({msg:'unauthorized'})
+
 }
 const user= jwt.verify(token, process.env.TOKEN_SECRET_KEY)
 
 if(!user){
+    console.log('unautherized user')
     return res.status(401).json({msg:'unauthorized'})
 }
 req.user=user

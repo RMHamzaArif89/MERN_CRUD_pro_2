@@ -50,7 +50,7 @@ mernUser.methods.generateToken=async function(){
         // if(this.include(token)){
         //     return 
         // }
-        const token= jwt.sign({_id:this._id},process.env.TOKEN_SECRET_KEY, {expiresIn:'2m'})
+        const token= jwt.sign({_id:this._id},process.env.TOKEN_SECRET_KEY, {expiresIn:'4m'})
         
         // this.tokens=this.tokens.concat({token})
         return token
