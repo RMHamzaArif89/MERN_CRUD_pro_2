@@ -60,6 +60,7 @@ mernUser.methods.generateToken=async function(){
 res.send('error occur')
     }
 }
+
 //jsonwebtokengenerate
 mernUser.methods.generateRefreshToken= async function(){
     try{
