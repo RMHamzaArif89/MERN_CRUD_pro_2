@@ -40,7 +40,7 @@ function Form() {
     formData.append("detail",values.detail)
 
 
-const res=axios.post(
+const res=await axios.post(
 "http://localhost:5000/api/createProduct",
 formData,{
   headers:{
@@ -49,23 +49,17 @@ formData,{
   credentials: 'include'
 
 }
-).then(res=>console.log(res))
-.then(
+).then(
   
-setValues({
-  name:'',
-  price:'',
-  img:'',
-  detail:''
-})
-).then(res=>
-  res.status==200?navigate('/login'):navigate('/signup')
-)
+  setValues({
+    name:'',
+    price:'',
+    img:'',
+    detail:''
+  })
+  )
+.then(res=>res?navigate('/cards'):console.log(res))
 
-  
-if(res.status==200){
-  navigate('/cards')
-}
 
 
 
