@@ -13,7 +13,7 @@ function Form() {
 
     const navigate=useNavigate()
 
-    const handleChange=(e)=>{
+    const handleChange=async(e)=>{
         // e.preventDefault()
 
         let name=e.target.name;
@@ -40,7 +40,7 @@ function Form() {
     formData.append("detail",values.detail)
 
 
-axios.post(
+const res=axios.post(
 "http://localhost:5000/api/createProduct",
 formData,{
   headers:{
@@ -49,8 +49,8 @@ formData,{
   credentials: 'include'
 
 }
-).then(res=>console.log(res)
-).then(
+).then(res=>console.log(res))
+.then(
   
 setValues({
   name:'',
@@ -58,11 +58,16 @@ setValues({
   img:'',
   detail:''
 })
-).then(
-  
-    navigate('/Cards')
-
+).then(res=>
+  res.status==200?navigate('/login'):navigate('/signup')
 )
+
+  
+if(res.status==200){
+  navigate('/cards')
+}
+
+
 
 
   }catch(e){

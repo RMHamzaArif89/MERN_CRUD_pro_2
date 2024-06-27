@@ -264,7 +264,7 @@ catch(e){
   
 })
 
-router.get('/logout', authenticateToken, async(req,res)=>{
+router.get('/logout', async(req,res)=>{
   console.log('logout enter')
   try{
    res.status(200).clearCookie('accessToken')
